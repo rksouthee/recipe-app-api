@@ -100,7 +100,12 @@ class PrivateTagsApiTests(TestCase):
         """Test listing tags to those assigned recipes."""
         tag1 = Tag.objects.create(user=self.user, name="Breakfast")
         tag2 = Tag.objects.create(user=self.user, name="Lunch")
-        recipe = Recipe.objects.create(title="Green Eggs on Toast", time_minutes=50, price=Decimal("2.50"), user=self.user)
+        recipe = Recipe.objects.create(
+            title="Green Eggs on Toast",
+            time_minutes=50,
+            price=Decimal("2.50"),
+            user=self.user,
+        )
         recipe.tags.add(tag1)
 
         res = self.client.get(TAGS_URL, {"assigned_only": 1})
@@ -114,8 +119,12 @@ class PrivateTagsApiTests(TestCase):
         """Test filtered tags returns a unique list."""
         tag = Tag.objects.create(user=self.user, name="Breakfast")
         Tag.objects.create(user=self.user, name="Dinner")
-        recipe1 = Recipe.objects.create(title="Pancakes", time_minutes=20, price=Decimal("5.00"), user=self.user)
-        recipe2 = Recipe.objects.create(title="Porridge", time_minutes=3, price=Decimal("2.00"), user=self.user)
+        recipe1 = Recipe.objects.create(
+            title="Pancakes", time_minutes=20, price=Decimal("5.00"), user=self.user
+        )
+        recipe2 = Recipe.objects.create(
+            title="Porridge", time_minutes=3, price=Decimal("2.00"), user=self.user
+        )
         recipe1.tags.add(tag)
         recipe2.tags.add(tag)
 
